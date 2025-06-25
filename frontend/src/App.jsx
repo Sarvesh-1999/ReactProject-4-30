@@ -1,8 +1,13 @@
-import React from 'react'
+import Navbar from './components/Navbar'
+import RegisterPage from './components/RegisterPage'
 
 const App = () => {
   return (
-    <div>App</div>
+    <div>
+      <Navbar/>
+
+      <RegisterPage/>
+    </div>
   )
 }
 
