@@ -1,14 +1,11 @@
-import Navbar from './components/Navbar'
-import RegisterPage from './components/RegisterPage'
-
+import { RouterProvider } from "react-router-dom";
+import { myRoutes } from "./routes/Router";
 const App = () => {
   return (
     <div>
-      <Navbar/>
-
-      <RegisterPage/>
+      <RouterProvider router={myRoutes} />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

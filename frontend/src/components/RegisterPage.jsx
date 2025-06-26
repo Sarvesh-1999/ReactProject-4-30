@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -13,68 +14,122 @@ const RegisterPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const validateInputs = (data) => {
+    let { username, email, password, confirmpassword } = data;
+
+    if (username.trim() === "") {
+      toast.error("username is a required input field");
+      return false;
+    } else if (username.trim().length < 6) {
+      toast.error("username should be atleast 6 characters");
+      return false;
+    } else if (email.trim() === "") {
+      toast.error("email is a required input field");
+      return false;
+    } else if (password.trim() === "") {
+      toast.error("password is a required input field");
+      return false;
+    } else if (password.trim().length < 8) {
+      toast.error("password should be atleast 8 characters");
+      return false;
+    } else if (password.trim() !== confirmpassword.trim()) {
+      toast.error("password mismatch");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const register = (e) => {
     e.preventDefault();
+
+    if (!validateInputs(formData)) return;
+
     console.log("Form Submitted");
     console.log(formData);
+    setFormData({
+      username: "",
+      email: "",
+      password: "",
+      confirmpassword: "",
+    });
   };
 
   return (
-    <div className="h-screen w-full flex justify-center items-center">
-      <form className="shadow-lg mt-[-100px] p-5">
-        <h3 className="text-center font-semibold text-2xl">Register</h3>
-        <div className="flex flex-col mb-3">
-          <label htmlFor="username">Username</label>
+    <div className="h-screen w-full flex justify-center items-center bg-gradient-to-br from-violet-200 via-violet-100 to-white">
+      <form className="shadow-2xl mt-16 p-6 rounded-xl bg-white min-w-[350px] w-full max-w-md border border-violet-100">
+        <h3 className="text-center font-bold text-3xl text-violet-700 mb-3 tracking-wide">
+          Register
+        </h3>
+        <div className="flex flex-col mb-4">
+          <label
+            htmlFor="username"
+            className="mb-1 text-violet-700 font-medium"
+          >
+            Username
+          </label>
           <input
             type="text"
-            className="border border-b-gray-300 outline-0 px-2 py-1"
+            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
             name="username"
             id="username"
             value={formData.username}
             onChange={handleChange}
+            placeholder="Enter your username"
           />
         </div>
-
-        <div className="flex flex-col mb-3">
-          <label htmlFor="email">Email</label>
+        <div className="flex flex-col mb-4">
+          <label htmlFor="email" className="mb-1 text-violet-700 font-medium">
+            Email
+          </label>
           <input
-            type="text"
-            className="border border-b-gray-300 outline-0 px-2 py-1"
+            type="email"
+            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
             name="email"
             id="email"
             value={formData.email}
             onChange={handleChange}
+            placeholder="Enter your email"
           />
         </div>
-
-        <div className="flex flex-col mb-3">
-          <label htmlFor="password">Password</label>
+        <div className="flex flex-col mb-4">
+          <label
+            htmlFor="password"
+            className="mb-1 text-violet-700 font-medium"
+          >
+            Password
+          </label>
           <input
-            type="text"
-            className="border border-b-gray-300 outline-0 px-2 py-1"
+            type="password"
+            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
             name="password"
             id="password"
             value={formData.password}
             onChange={handleChange}
+            placeholder="Enter your password"
           />
         </div>
-
-        <div className="flex flex-col mb-3">
-          <label htmlFor="confirmpassword">Confirm Password</label>
+        <div className="flex flex-col mb-7">
+          <label
+            htmlFor="confirmpassword"
+            className="mb-1 text-violet-700 font-medium"
+          >
+            Confirm Password
+          </label>
           <input
-            type="text"
-            className="border border-b-gray-300 outline-0 px-2 py-1"
+            type="password"
+            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
             name="confirmpassword"
             id="confirmpassword"
             value={formData.confirmpassword}
             onChange={handleChange}
+            placeholder="Confirm your password"
           />
         </div>
-
         <div>
           <button
             onClick={register}
-            className="bg-violet-400 w-full py-2 rounded"
+            className="bg-gradient-to-r from-violet-500 to-violet-700 w-full py-2 rounded-lg text-white font-semibold shadow-md hover:from-violet-600 hover:to-violet-800 hover:scale-105 transition-all duration-200 text-lg"
           >
             Signup
           </button>
