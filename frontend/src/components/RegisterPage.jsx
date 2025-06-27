@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { AxiosInstance } from "../routes/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,8 @@ const RegisterPage = () => {
     password: "",
     confirmpassword: "",
   });
+
+  let navigate = useNavigate();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -40,13 +44,21 @@ const RegisterPage = () => {
     }
   };
 
-  const register = (e) => {
+  const register = async (e) => {
     e.preventDefault();
-
     if (!validateInputs(formData)) return;
 
-    console.log("Form Submitted");
-    console.log(formData);
+    try {
+      let resp = await AxiosInstance.post(`/users`, formData);
+      console.log(resp);
+      toast.success("Registered Successfully");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+
+    // reset input fields
     setFormData({
       username: "",
       email: "",

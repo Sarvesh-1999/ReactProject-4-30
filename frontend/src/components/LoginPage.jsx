@@ -1,20 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { AxiosInstance } from "../routes/axiosInstance";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [allUsers, setAllUsers] = useState([]);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  useEffect(() => {
+    async function getRegisteredUser() {
+      let resp = await AxiosInstance.get("/users");
+      setAllUsers(resp.data);
+    }
+
+    getRegisteredUser();
+  }, []);
+
   const login = (e) => {
     e.preventDefault();
-    console.log("Form Submitted");
-    console.log(formData);
+
+    // finding auth user -> AUTHENTICATION
+    let authUser = allUsers.find((user) => {
+      return (
+        user.email === formData.email && user.password === formData.password
+      );
+    });
+
+    // AUTHOURIZATION
+    if (authUser) {
+      // navigate to dashboard
+      navigate("/dashboard");
+
+      // store auth user's id in local storage
+      localStorage.setItem("userid", authUser.id);
+
+      // toast message
+      toast.success(`Welcome ${authUser.username}`);
+    }
   };
 
   return (
@@ -24,10 +56,7 @@ const LoginPage = () => {
           Login
         </h3>
         <div className="flex flex-col mb-5">
-          <label
-            htmlFor="email"
-            className="mb-1 text-violet-700 font-medium"
-          >
+          <label htmlFor="email" className="mb-1 text-violet-700 font-medium">
             Email
           </label>
           <input
