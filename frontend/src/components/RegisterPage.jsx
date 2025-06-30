@@ -8,144 +8,104 @@ const RegisterPage = () => {
     username: "",
     email: "",
     password: "",
-    confirmpassword: "",
   });
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    let { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const validateInputs = (data) => {
-    let { username, email, password, confirmpassword } = data;
-
-    if (username.trim() === "") {
-      toast.error("username is a required input field");
-      return false;
-    } else if (username.trim().length < 6) {
-      toast.error("username should be atleast 6 characters");
-      return false;
-    } else if (email.trim() === "") {
-      toast.error("email is a required input field");
-      return false;
-    } else if (password.trim() === "") {
-      toast.error("password is a required input field");
-      return false;
-    } else if (password.trim().length < 8) {
-      toast.error("password should be atleast 8 characters");
-      return false;
-    } else if (password.trim() !== confirmpassword.trim()) {
-      toast.error("password mismatch");
-      return false;
-    } else {
-      return true;
-    }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const register = async (e) => {
     e.preventDefault();
-    if (!validateInputs(formData)) return;
 
     try {
-      let resp = await AxiosInstance.post(`/users`, formData);
-      console.log(resp);
-      toast.success("Registered Successfully");
+      const response = await AxiosInstance.post("/user/register", {
+        userName: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      toast.success("Registered successfully");
       navigate("/login");
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+      console.error("Registration error:", error?.response || error.message);
+      const msg = error?.response?.data?.message || "Something went wrong during registration";
+      toast.error(msg);
     }
 
-    // reset input fields
     setFormData({
       username: "",
       email: "",
       password: "",
-      confirmpassword: "",
     });
   };
 
   return (
     <div className="h-screen w-full flex justify-center items-center bg-gradient-to-br from-violet-200 via-violet-100 to-white">
-      <form className="shadow-2xl mt-16 p-6 rounded-xl bg-white min-w-[350px] w-full max-w-md border border-violet-100">
+      <form
+        onSubmit={register}
+        className="shadow-2xl mt-16 p-6 rounded-xl bg-white min-w-[350px] w-full max-w-md border border-violet-100"
+      >
         <h3 className="text-center font-bold text-3xl text-violet-700 mb-3 tracking-wide">
           Register
         </h3>
+
+        {/* Username */}
         <div className="flex flex-col mb-4">
-          <label
-            htmlFor="username"
-            className="mb-1 text-violet-700 font-medium"
-          >
+          <label htmlFor="username" className="mb-1 text-violet-700 font-medium">
             Username
           </label>
           <input
             type="text"
-            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
-            name="username"
             id="username"
+            name="username"
             value={formData.username}
             onChange={handleChange}
             placeholder="Enter your username"
+            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
           />
         </div>
+
+        {/* Email */}
         <div className="flex flex-col mb-4">
           <label htmlFor="email" className="mb-1 text-violet-700 font-medium">
             Email
           </label>
           <input
             type="email"
-            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
-            name="email"
             id="email"
+            name="email"
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email"
+            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
           />
         </div>
-        <div className="flex flex-col mb-4">
-          <label
-            htmlFor="password"
-            className="mb-1 text-violet-700 font-medium"
-          >
+
+        {/* Password */}
+        <div className="flex flex-col mb-7">
+          <label htmlFor="password" className="mb-1 text-violet-700 font-medium">
             Password
           </label>
           <input
             type="password"
-            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
-            name="password"
             id="password"
+            name="password"
             value={formData.password}
             onChange={handleChange}
             placeholder="Enter your password"
-          />
-        </div>
-        <div className="flex flex-col mb-7">
-          <label
-            htmlFor="confirmpassword"
-            className="mb-1 text-violet-700 font-medium"
-          >
-            Confirm Password
-          </label>
-          <input
-            type="password"
             className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
-            name="confirmpassword"
-            id="confirmpassword"
-            value={formData.confirmpassword}
-            onChange={handleChange}
-            placeholder="Confirm your password"
           />
         </div>
-        <div>
-          <button
-            onClick={register}
-            className="bg-gradient-to-r from-violet-500 to-violet-700 w-full py-2 rounded-lg text-white font-semibold shadow-md hover:from-violet-600 hover:to-violet-800 hover:scale-105 transition-all duration-200 text-lg"
-          >
-            Signup
-          </button>
-        </div>
+
+        <button
+          type="submit"
+          className="bg-gradient-to-r from-violet-500 to-violet-700 w-full py-2 rounded-lg text-white font-semibold shadow-md hover:from-violet-600 hover:to-violet-800 hover:scale-105 transition-all duration-200 text-lg"
+        >
+          Signup
+        </button>
       </form>
     </div>
   );
