@@ -38,11 +38,11 @@ const LoginPage = () => {
 
     // AUTHOURIZATION
     if (authUser) {
-      // navigate to dashboard
-      navigate("/dashboard");
+      // navigate to home
+      navigate("/home");
 
-      // store auth user's id in local storage
-      localStorage.setItem("userid", authUser.id);
+      // store accesstoken in local storage
+      localStorage.setItem("accesstoken", Date.now());
 
       // toast message
       toast.success(`Welcome ${authUser.username}`);
