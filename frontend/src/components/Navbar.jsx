@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { IoCartOutline } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
+
 const Navbar = () => {
   let accesstoken = localStorage.getItem("accesstoken");
 
+  
   return (
     <nav className="absolute top-0 font-semibold h-[70px] w-full bg-white shadow-lg flex items-center justify-between px-8">
       <div className="text-3xl font-bold tracking-wide select-none cursor-pointer transition-transform hover:scale-105">
