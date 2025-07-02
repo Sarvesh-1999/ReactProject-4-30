@@ -9,7 +9,8 @@ import { SiAdidas } from "react-icons/si";
 import { SiNike } from "react-icons/si";
 import { SiZara } from "react-icons/si";
 import { SiHandm } from "react-icons/si";
-import { Carousel } from "flowbite-react";
+import AliceCarousel from "react-alice-carousel";
+import "react-alice-carousel/lib/alice-carousel.css";
 
 const Home = () => {
   const categories = [
@@ -177,43 +178,98 @@ const Home = () => {
     },
   ];
 
+  const items = [
+    <div className="item h-[70vh] relative" data-value="1">
+      <img
+        src="/assets/image1.png"
+        alt="landing image"
+        className="h-full w-full object-center object-cover"
+      />
+
+      <div className="absolute top-30 left-30">
+        <h1 className="text-5xl font-light mb-2">
+          We Pick Every Item with Care
+        </h1>
+        <h1 className="text-4xl font-bold mb-10">You Must Try</h1>
+        <button className="bg-black text-white p-3">View Products</button>
+      </div>
+    </div>,
+    <div className="item h-[70vh] relative" data-value="2">
+      <img
+        src="/assets/image1.png"
+        alt="landing image"
+        className="h-full w-full object-center object-cover"
+      />
+
+      <div className="absolute top-30 left-30">
+        <h1 className="text-5xl font-light mb-2">
+          We Pick Every Item with Care
+        </h1>
+        <h1 className="text-4xl font-bold mb-10">You Must Try</h1>
+        <button className="bg-black text-white p-3">View Products</button>
+      </div>
+    </div>,
+    <div className="item h-[70vh] relative" data-value="3">
+      <img
+        src="/assets/image1.png"
+        alt="landing image"
+        className="h-full w-full object-center object-cover"
+      />
+
+      <div className="absolute top-30 left-30">
+        <h1 className="text-5xl font-light mb-2">
+          We Pick Every Item with Care
+        </h1>
+        <h1 className="text-4xl font-bold mb-10">You Must Try</h1>
+        <button className="bg-black text-white p-3">View Products</button>
+      </div>
+    </div>,
+    <div className="item h-[70vh] relative" data-value="4">
+      <img
+        src="/assets/image1.png"
+        alt="landing image"
+        className="h-full w-full object-center object-cover"
+      />
+
+      <div className="absolute top-30 left-30">
+        <h1 className="text-5xl font-light mb-2">
+          We Pick Every Item with Care
+        </h1>
+        <h1 className="text-4xl font-bold mb-10">You Must Try</h1>
+        <button className="bg-black text-white p-3">View Products</button>
+      </div>
+    </div>,
+    <div className="item h-[70vh] relative" data-value="5">
+      <img
+        src="/assets/image1.png"
+        alt="landing image"
+        className="h-full w-full object-center object-cover"
+      />
+
+      <div className="absolute top-30 left-30">
+        <h1 className="text-5xl font-light mb-2">
+          We Pick Every Item with Care
+        </h1>
+        <h1 className="text-4xl font-bold mb-10">You Must Try</h1>
+        <button className="bg-black text-white p-3">View Products</button>
+      </div>
+    </div>,
+  ];
+
   return (
     <section className="mt-[70px]  bg-gray-50">
-      <header className="h-[70vh] relative">
-        <img
-          src="/assets/image1.png"
-          alt="landing image"
-          className="h-full w-full object-center object-cover"
-        />
-
-        <div className="absolute top-30 left-30">
-          <h1 className="text-5xl font-light mb-2">
-            We Pick Every Item with Care
-          </h1>
-          <h1 className="text-4xl font-bold mb-10">You Must Try</h1>
-          <button className="bg-black text-white p-3">View Products</button>
-        </div>
-      </header>
-
-      {/* <header className="h-[70vh] relative">
-        <Carousel>
-          <img
-            src="/assets/image1.png"
-            alt="landing image"
-            className="h-full w-full object-center object-cover"
-          />
-          <img
-            src="https://static.vecteezy.com/system/resources/thumbnails/040/890/255/small_2x/ai-generated-empty-wooden-table-on-the-natural-background-for-product-display-free-photo.jpg"
-            alt="landing image"
-            className="h-full w-full object-center object-cover"
-          />
-          <img
-            src="https://img.freepik.com/free-photo/abstract-uv-ultraviolet-light-composition_23-2149243965.jpg?semt=ais_hybrid&w=740"
-            alt="landing image"
-            className="h-full w-full object-center object-cover"
-          />
-        </Carousel>
-      </header> */}
+      <AliceCarousel
+        autoPlay
+        autoPlayStrategy="none"
+        autoPlayInterval={2000}
+        animationDuration={1000}
+        animationType="slide"
+        infinite
+        touchTracking={false}
+        disableDotsControls
+        disableButtonsControls
+        items={items}
+      />
 
       <header className="py-20">
         <h1 className="text-4xl font-extrabold text-center">
