@@ -194,6 +194,9 @@ const Home = () => {
         <button className="bg-black text-white p-3">View Products</button>
       </div>
     </div>,
+
+
+
     <div className="item h-[70vh] relative" data-value="2">
       <img
         src="/assets/image1.png"

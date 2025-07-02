@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { AxiosInstance } from "../routes/axiosInstance";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -68,21 +68,21 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="h-screen w-full flex justify-center items-center bg-gradient-to-br from-violet-200 via-violet-100 to-white">
+    <div className="h-screen w-full flex justify-center items-center ">
       <form className="shadow-2xl mt-16 p-6 rounded-xl bg-white min-w-[350px] w-full max-w-md border border-violet-100">
-        <h3 className="text-center font-bold text-3xl text-violet-700 mb-3 tracking-wide">
+        <h3 className="text-center font-bold text-3xl text-black mb-3 tracking-wide">
           Register
         </h3>
         <div className="flex flex-col mb-4">
           <label
             htmlFor="username"
-            className="mb-1 text-violet-700 font-medium"
+            className="mb-1 text-black font-medium"
           >
             Username
           </label>
           <input
             type="text"
-            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
+            className="border border-gray-300 outline-gray-700 px-3 py-2 rounded focus:ring-2 focus:ring-gray-200 transition-all"
             name="username"
             id="username"
             value={formData.username}
@@ -91,12 +91,12 @@ const RegisterPage = () => {
           />
         </div>
         <div className="flex flex-col mb-4">
-          <label htmlFor="email" className="mb-1 text-violet-700 font-medium">
+          <label htmlFor="email" className="mb-1 text-black font-medium">
             Email
           </label>
           <input
             type="email"
-            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
+            className="border border-gray-300 outline-gray-700 px-3 py-2 rounded focus:ring-2 focus:ring-gray-200 transition-all"
             name="email"
             id="email"
             value={formData.email}
@@ -107,13 +107,13 @@ const RegisterPage = () => {
         <div className="flex flex-col mb-4">
           <label
             htmlFor="password"
-            className="mb-1 text-violet-700 font-medium"
+            className="mb-1 text-black font-medium"
           >
             Password
           </label>
           <input
             type="password"
-            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
+            className="border border-gray-300 outline-gray-700 px-3 py-2 rounded focus:ring-2 focus:ring-gray-200 transition-all"
             name="password"
             id="password"
             value={formData.password}
@@ -121,16 +121,16 @@ const RegisterPage = () => {
             placeholder="Enter your password"
           />
         </div>
-        <div className="flex flex-col mb-7">
+        <div className="flex flex-col mb-3">
           <label
             htmlFor="confirmpassword"
-            className="mb-1 text-violet-700 font-medium"
+            className="mb-1 text-black font-medium"
           >
             Confirm Password
           </label>
           <input
             type="password"
-            className="border border-violet-300 outline-violet-400 px-3 py-2 rounded focus:ring-2 focus:ring-violet-200 transition-all"
+            className="border border-gray-300 outline-gray-700 px-3 py-2 rounded focus:ring-2 focus:ring-gray-200 transition-all"
             name="confirmpassword"
             id="confirmpassword"
             value={formData.confirmpassword}
@@ -138,10 +138,13 @@ const RegisterPage = () => {
             placeholder="Confirm your password"
           />
         </div>
+        <div className="mb-3">
+          <p className="text-center">Already have an account ? <Link to={"/login"} className="font-semibold">Login</Link></p>
+        </div>
         <div>
           <button
             onClick={register}
-            className="bg-gradient-to-r from-violet-500 to-violet-700 w-full py-2 rounded-lg text-white font-semibold shadow-md hover:from-violet-600 hover:to-violet-800 hover:scale-105 transition-all duration-200 text-lg"
+            className="bg-black w-full py-2 rounded-lg text-white font-semibold shadow-md hover:from-violet-600 hover:to-violet-800 hover:scale-105 transition-all duration-200 text-lg"
           >
             Signup
           </button>
