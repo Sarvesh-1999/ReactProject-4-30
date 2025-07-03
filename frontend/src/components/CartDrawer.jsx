@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import { IoCartOutline } from "react-icons/io5";
+import { IoCartOutline, IoClose } from "react-icons/io5";
 import Divider from "@mui/material/Divider";
 
 export default function CartDrawer() {
@@ -27,9 +27,10 @@ export default function CartDrawer() {
   ];
 
   const DrawerList = (
-    <Box sx={{ width: 450 }} role="presentation" onClick={toggleDrawer(false)}>
-      <div className="p-5">
+    <Box sx={{ width: 450 }} role="presentation" >
+      <div className="p-5 flex justify-between items-center">
         <h1 className="text-3xl font-bold">Cart</h1>
+        <IoClose size={30} onClick={toggleDrawer(false)}/>
       </div>
 
       <Divider />
@@ -37,8 +38,15 @@ export default function CartDrawer() {
       <div className="p-5">
         {sampleProducts.map((ele) => {
           return (
-            <div key={ele.id} className="p-2 flex gap-1 rounded shadow-md border border-gray-200">
-              <img src="https://media.istockphoto.com/id/137996281/photo/blue-t-shirt.jpg?s=612x612&w=0&k=20&c=7D3z5wCRV3Duvyc8lLFJVAFqkWMg4xHcDieuqspq8zk=" alt="" className="border h-20 w-20 object-center object-cover" />
+            <div
+              key={ele.id}
+              className="p-2 flex gap-1 rounded shadow-md border border-gray-200"
+            >
+              <img
+                src="https://media.istockphoto.com/id/137996281/photo/blue-t-shirt.jpg?s=612x612&w=0&k=20&c=7D3z5wCRV3Duvyc8lLFJVAFqkWMg4xHcDieuqspq8zk="
+                alt=""
+                className="border h-20 w-20 object-center object-cover"
+              />
               <div className="border w-full ps-1 text-black">
                 <h1 className="capitalize font-semibold">{ele.title}</h1>
               </div>

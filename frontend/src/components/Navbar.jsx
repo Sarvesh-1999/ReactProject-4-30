@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="absolute top-0 font-semibold h-[70px] w-full bg-white shadow-lg flex items-center justify-between px-8">
+      <nav className="absolute top-0 font-semibold h-[70px] w-full bg-white shadow-md flex items-center justify-between px-8">
         <div className="text-3xl font-bold tracking-wide select-none cursor-pointer transition-transform hover:scale-105">
           QShop
         </div>
@@ -23,8 +23,12 @@ const Navbar = () => {
         {accesstoken ? (
           <>
             <section className="flex">
-              <div className="p-4">Home</div>
-              <div className="p-4">Products</div>
+              <div className="p-4">
+                <Link to={"/home"}>Home</Link>
+              </div>
+              <div className="p-4">
+                <Link to={"/products"}>Products</Link>
+              </div>
               <div className="p-4">Men</div>
               <div className="p-4">Women</div>
               <div className="p-4">Kids</div>

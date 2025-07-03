@@ -4,6 +4,7 @@ import RegisterPage from "../components/RegisterPage";
 import LoginPage from "../components/LoginPage";
 import Dashboard from "../components/Dashboard";
 import Home from "../components/Home";
+import Products from "../components/Products";
 
 export let myRoutes = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export let myRoutes = createBrowserRouter([
         path: "/home",
         element: <Home />,
       },
+      {
+        path:"/products",
+        element:<Products/>
+      }
     ],
   },
 ]);
