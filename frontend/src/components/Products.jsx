@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 
 const Products = () => {
   const [allProducts, setAllProducts] = useState([]);
-  //   const [selectedCategory, setSelectedCategory] = useState([]);
 
   useEffect(() => {
     const sampleProducts = [
@@ -12,7 +11,7 @@ const Products = () => {
         title: "cotton casual shirt",
         description:
           "comfortable and breathable cotton casual shirt for daily wear",
-        category: "clothing",
+        category: "men",
         brand: "united colors",
         price: 999,
         salePrice: 799,
@@ -128,11 +127,6 @@ const Products = () => {
 
     setAllProducts(sampleProducts);
   }, []);
-
-  //   const filterCategory = (category) =>{
-  //     let val = allProducts.filter(product => product.category === category )
-  //     setAllProducts(val)
-  // }
 
   return (
     <div className="mt-[70px] flex">

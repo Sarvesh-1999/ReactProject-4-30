@@ -3,9 +3,14 @@ import { IoCartOutline } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import CartDrawer from "./CartDrawer";
 import Avatar from "@mui/material/Avatar";
+import { useContext } from "react";
+import { GlobalAuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-  let accesstoken = localStorage.getItem("accesstoken");
+  let { loggedInUser , authUser } = useContext(GlobalAuthContext);
+  console.log(loggedInUser);
+  console.log(authUser);
+  
 
   function stringAvatar(name) {
     return {
@@ -20,7 +25,7 @@ const Navbar = () => {
           QShop
         </div>
 
-        {accesstoken ? (
+        {loggedInUser ? (
           <>
             <section className="flex">
               <div className="p-4">
@@ -43,7 +48,10 @@ const Navbar = () => {
               </div>
 
               <div className="text-2xl">
-                <Avatar sx={{ bgcolor: "black" }} {...stringAvatar("John Doe")} />
+                <Avatar
+                  sx={{ bgcolor: "black" }}
+                  {...stringAvatar("John Doe")}
+                />
               </div>
             </section>
           </>

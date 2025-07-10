@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AxiosInstance } from "../routes/axiosInstance";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import { GlobalAuthContext } from "../context/AuthContext";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [allUsers, setAllUsers] = useState([]);
+  const { setLoggedInUser } = useContext(GlobalAuthContext);
 
   const navigate = useNavigate();
 
@@ -17,35 +18,43 @@ const LoginPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  useEffect(() => {
-    async function getRegisteredUser() {
-      let resp = await AxiosInstance.get("/users");
-      setAllUsers(resp.data);
-    }
+  // const login = (e) => {
+  //   e.preventDefault();
 
-    getRegisteredUser();
-  }, []);
+  //   // finding auth user -> AUTHENTICATION
+  //   let authUser = allUsers.find((user) => {
+  //     return (
+  //       user.email === formData.email && user.password === formData.password
+  //     );
+  //   });
 
-  const login = (e) => {
+  //   // AUTHOURIZATION
+  //   if (authUser) {
+  //     // navigate to home
+  //     navigate("/home");
+
+  //     // store accesstoken in local storage
+  //     localStorage.setItem("accesstoken", Date.now());
+
+  //     // toast message
+  //     toast.success(`Welcome ${authUser.username}`);
+  //   }
+  // };
+
+  const login = async (e) => {
     e.preventDefault();
-
-    // finding auth user -> AUTHENTICATION
-    let authUser = allUsers.find((user) => {
-      return (
-        user.email === formData.email && user.password === formData.password
-      );
-    });
-
-    // AUTHOURIZATION
-    if (authUser) {
-      // navigate to home
+    try {
+      let res = await AxiosInstance.post("/user/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+      console.log(res);
+      toast.success(res.data.message);
+      setLoggedInUser(true);
       navigate("/home");
-
-      // store accesstoken in local storage
-      localStorage.setItem("accesstoken", Date.now());
-
-      // toast message
-      toast.success(`Welcome ${authUser.username}`);
+    } catch (error) {
+      console.log("Error while log in");
+      toast.error(error.response.data.message);
     }
   };
 
@@ -70,10 +79,7 @@ const LoginPage = () => {
           />
         </div>
         <div className="flex flex-col mb-7">
-          <label
-            htmlFor="password"
-            className="mb-1 text-black font-medium"
-          >
+          <label htmlFor="password" className="mb-1 text-black font-medium">
             Password
           </label>
           <input
@@ -87,7 +93,12 @@ const LoginPage = () => {
           />
         </div>
         <div className="mb-3">
-          <p className="text-center">New here ? <Link to={"/"} className="font-semibold">Register</Link></p>
+          <p className="text-center">
+            New here ?{" "}
+            <Link to={"/"} className="font-semibold">
+              Register
+            </Link>
+          </p>
         </div>
         <div>
           <button
