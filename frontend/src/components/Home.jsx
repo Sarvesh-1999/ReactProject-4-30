@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IoShirtOutline } from "react-icons/io5";
 import { PiPantsLight } from "react-icons/pi";
 import { CgBoy } from "react-icons/cg";
@@ -11,8 +11,12 @@ import { SiZara } from "react-icons/si";
 import { SiHandm } from "react-icons/si";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
+import ProductCard from "./ProductCard";
+import { AllProductsContext } from "../context/ProductsContext";
 
 const Home = () => {
+  let { products } = useContext(AllProductsContext);
+
   const categories = [
     {
       icon: <IoShirtOutline />,
@@ -195,8 +199,6 @@ const Home = () => {
       </div>
     </div>,
 
-
-
     <div className="item h-[70vh] relative" data-value="2">
       <img
         src="/assets/image1.png"
@@ -314,40 +316,18 @@ const Home = () => {
         </h1>
       </header>
 
-      <article className="grid grid-cols-4">
-        {sampleProducts.map((product, idx) => {
-          return (
-            <div key={idx} className="p-3">
-              <div className="rounded-lg overflow-hidden shadow-md bg-white">
-                <img
-                  src="https://rukminim3.flixcart.com/image/850/1000/kvtuxe80/t-shirt/i/k/4/m-dm2254-100nike-nike-original-imag8nbgt2ga6uu8.jpeg?q=90&crop=false"
-                  alt=""
-                  className=" h-[325px] w-full object-top object-cover"
-                />
-
-                <div className="p-3">
-                  <h1 className="font-bold capitalize text-2xl">
-                    {product.title}
-                  </h1>
-
-                  <h2 className="flex justify-between uppercase font-semibold text-gray-600 text-sm">
-                    <span>{product.category}</span>
-                    <span>{product.brand}</span>
-                  </h2>
-
-                  <p className="flex justify-between font-bold">
-                    <del>Rs.{product.price}</del>
-                    <span>Rs.{product.salePrice}</span>
-                  </p>
-
-                  <button className="bg-black text-white w-full py-2 rounded mt-4">
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+      <article className="">
+        {products.length === 0 ? (
+          <h1 className="text-center font-semibold text-2xl p-10">
+            No Products Available.....
+          </h1>
+        ) : (
+          <section className="grid grid-cols-4">
+            {products.map((product, idx) => {
+              return <ProductCard key={idx} product={product} />;
+            })}
+          </section>
+        )}
       </article>
     </section>
   );

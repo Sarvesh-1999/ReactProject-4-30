@@ -1,22 +1,44 @@
-import { Link } from "react-router-dom";
-import { IoCartOutline } from "react-icons/io5";
-import { FaRegUserCircle } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import CartDrawer from "./CartDrawer";
 import Avatar from "@mui/material/Avatar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalAuthContext } from "../context/AuthContext";
-
+import { AxiosInstance } from "../routes/axiosInstance";
+import { toast } from "react-toastify";
 const Navbar = () => {
-  let { loggedInUser , authUser } = useContext(GlobalAuthContext);
-  console.log(loggedInUser);
-  console.log(authUser);
-  
+  const [toggle, setToggle] = useState(false);
+  const toggleHandle = () => setToggle(!toggle);
 
-  function stringAvatar(name) {
-    return {
-      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-    };
+  let { loggedInUser, authUser, setLoggedInUser } = useContext(GlobalAuthContext);
+  let navigate = useNavigate()
+
+  function stringAvatar(name = "") {
+    let word = name.split(" ");
+    if (word.length > 1) {
+      return {
+        children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+      };
+    } else {
+      return {
+        children: `${name.split(" ")[0][0]}`,
+      };
+    }
   }
+
+  const logoutHandle = async () => {
+    try {
+      let res = await AxiosInstance.post("/user/logout");
+      console.log(res);
+      if (res.data.success) {
+        toast.success(res.data.message);
+        setLoggedInUser(false)
+        setToggle(false)
+        navigate("/login")
+      }
+    } catch (error) {
+      toast.error(res.data.message);
+    }
+  };
 
   return (
     <>
@@ -47,11 +69,23 @@ const Navbar = () => {
                 <CartDrawer />
               </div>
 
-              <div className="text-2xl">
+              <div className="text-2xl relative">
                 <Avatar
                   sx={{ bgcolor: "black" }}
-                  {...stringAvatar("John Doe")}
+                  className="uppercase"
+                  {...stringAvatar(authUser.userName)}
+                  onClick={toggleHandle}
                 />
+
+                {toggle ? (
+                  <>
+                    <div className="border border-gray-300 absolute z-50 right-0 px-5 py-2 top-11 bg-white rounded shadow-xl">
+                      <button onClick={logoutHandle} className="hover:bg-gray-100 px-5 py-1 rounded cursor-pointer">
+                        Logout
+                      </button>
+                    </div>
+                  </>
+                ) : null}
               </div>
             </section>
           </>

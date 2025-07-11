@@ -5,7 +5,8 @@ export const GlobalAuthContext = createContext();
 
 const AuthContext = (props) => {
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [authUser,setAuthUser] = useState({})
+  const [authUser, setAuthUser] = useState({});
+  const [loading, setLoading] = useState(true);
 
   async function checkIsLoggedInUser() {
     try {
@@ -14,6 +15,8 @@ const AuthContext = (props) => {
       setLoggedInUser(res.data.success); // true or false
     } catch (error) {
       setLoggedInUser(false);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -22,7 +25,13 @@ const AuthContext = (props) => {
   }, []);
   return (
     <GlobalAuthContext.Provider
-      value={{ loggedInUser, setLoggedInUser, checkIsLoggedInUser , authUser }}
+      value={{
+        loggedInUser,
+        setLoggedInUser,
+        checkIsLoggedInUser,
+        authUser,
+        loading,
+      }}
     >
       {props.children}
     </GlobalAuthContext.Provider>

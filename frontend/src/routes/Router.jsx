@@ -5,6 +5,7 @@ import LoginPage from "../components/LoginPage";
 import Dashboard from "../components/Dashboard";
 import Home from "../components/Home";
 import Products from "../components/Products";
+import PrivateUserRoute from "./PrivateUserRoute";
 
 export let myRoutes = createBrowserRouter([
   {
@@ -25,12 +26,20 @@ export let myRoutes = createBrowserRouter([
       },
       {
         path: "/home",
-        element: <Home />,
+        element: (
+          <PrivateUserRoute>
+            <Home />
+          </PrivateUserRoute>
+        ),
       },
       {
-        path:"/products",
-        element:<Products/>
-      }
+        path: "/products",
+        element: (
+          <PrivateUserRoute>
+            <Products />
+          </PrivateUserRoute>
+        ),
+      },
     ],
   },
 ]);
