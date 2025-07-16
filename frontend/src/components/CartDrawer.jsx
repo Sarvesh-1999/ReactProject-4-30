@@ -3,12 +3,22 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import { IoCartOutline, IoClose } from "react-icons/io5";
 import Divider from "@mui/material/Divider";
+import { AxiosInstance } from "../routes/axiosInstance";
+import CartProduct from "./CartProduct";
 
 export default function CartDrawer() {
   const [open, setOpen] = React.useState(false);
+  const [cartItems, setCartItems] = React.useState([]);
+
+  const getCartItems = async () => {
+    let res = await AxiosInstance.get("/shop/cart/get");
+    console.log(res);
+    setCartItems(res.data.data.items);
+  };
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
+    getCartItems();
   };
 
   const sampleProducts = [
@@ -26,32 +36,33 @@ export default function CartDrawer() {
     },
   ];
 
+  const onDelete = async () => {
+    let res = await AxiosInstance.delete("/shop/cart/clear");
+    console.log(res);
+  };
+
   const DrawerList = (
-    <Box sx={{ width: 450 }} role="presentation" >
+    <Box sx={{ width: 450 }} role="presentation">
       <div className="p-5 flex justify-between items-center">
         <h1 className="text-3xl font-bold">Cart</h1>
-        <IoClose size={30} onClick={toggleDrawer(false)}/>
+        <IoClose size={30} onClick={toggleDrawer(false)} />
       </div>
 
       <Divider />
 
+      <div className="flex justify-end">
+        <button
+          onClick={() => onDelete()}
+          className="text-red-500 hover:text-red-700 font-semibold text-xl px-2 py-1 rounded transition-colors"
+          title="Remove from cart"
+        >
+          Clear All
+        </button>
+      </div>
+
       <div className="p-5">
-        {sampleProducts.map((ele) => {
-          return (
-            <div
-              key={ele.id}
-              className="p-2 flex gap-1 rounded shadow-md border border-gray-200"
-            >
-              <img
-                src="https://media.istockphoto.com/id/137996281/photo/blue-t-shirt.jpg?s=612x612&w=0&k=20&c=7D3z5wCRV3Duvyc8lLFJVAFqkWMg4xHcDieuqspq8zk="
-                alt=""
-                className="border h-20 w-20 object-center object-cover"
-              />
-              <div className="border w-full ps-1 text-black">
-                <h1 className="capitalize font-semibold">{ele.title}</h1>
-              </div>
-            </div>
-          );
+        {cartItems.map((product, idx) => {
+          return <CartProduct key={idx} product={product} />;
         })}
       </div>
     </Box>

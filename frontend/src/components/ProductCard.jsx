@@ -1,6 +1,19 @@
 import React from "react";
+import { AxiosInstance } from "../routes/axiosInstance";
+import { toast } from "react-toastify";
 
-const ProductCard = ({product}) => {
+const ProductCard = ({ product }) => {
+  
+  const addToCart = async (item) => {
+    let res = await AxiosInstance.post("/shop/cart/add", {
+      productId: item.id,
+    });
+
+    if (res.data.success) {
+      toast.success("Item Added");
+    }
+  };
+
   return (
     <div className="p-3">
       <div className="rounded-lg overflow-hidden shadow-md bg-white">
@@ -23,7 +36,10 @@ const ProductCard = ({product}) => {
             <span>Rs.{product.salePrice}</span>
           </p>
 
-          <button className="bg-black text-white w-full py-2 rounded mt-4">
+          <button
+            onClick={() => addToCart(product)}
+            className="bg-black text-white w-full py-2 rounded mt-4"
+          >
             Add to cart
           </button>
         </div>
